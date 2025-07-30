@@ -2,6 +2,7 @@ import { ProductCardProps } from "@/types/produc";
 import Image from "next/image";
 import iconHeart from "../../public/icons-header/icon-heart.svg";
 import { formatPrice } from "@/utils/formatPrice";
+import StarRating from "./StarRating";
 
 const cardDiscountPercent = 6;
 
@@ -35,7 +36,7 @@ function ProductCard({
           src={img}
           alt="Акция"
           fill
-          className="object-cover"
+          className="object-cover md:object-contain"
           sizes="(max-width: 768px) 160px, (max-width: 1200px) 224px, 272px"
         />
         <button
@@ -88,7 +89,7 @@ function ProductCard({
         >
           {description}
         </div>
-        {rating > 0 && <p>Рейтинг {rating}</p>}
+        {rating > 0 && <StarRating rating={rating} />}
         <button
           className="border border-(--color-primary) hover:text-white
         hover:bg-[#ff6633] hover:border-transparent active:shadow-(--shadow-button-active)
