@@ -1,5 +1,5 @@
 import Action from "@/components/Action";
-import ProductCard from "@/components/ProductCard";
+import NewProducts from "@/components/NewProducts";
 import Slider from "@/components/slider/Slider";
 
 export default function Home() {
@@ -11,6 +11,7 @@ export default function Home() {
           flex flex-col gap-y-20 md:mb-25 xl:mb-30"
       >
         <Action />
+        <NewProducts />
       </div>
     </main>
   );

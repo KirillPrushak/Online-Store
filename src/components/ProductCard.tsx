@@ -12,6 +12,7 @@ function ProductCard({
   basePrice,
   discountPercent,
   rating,
+  categories,
 }: ProductCardProps) {
   const calculateFinalPrice = (price: number, discaunt: number): number => {
     return discaunt > 0 ? price * (1 - discaunt / 100) : price;
@@ -21,9 +22,15 @@ function ProductCard({
     return calculateFinalPrice(price, discaunt);
   };
 
-  const finalPrice = calculateFinalPrice(basePrice, discountPercent);
+  const isNewProduct = categories?.includes("new");
 
-  const priceByCard = calculatePriceByCard(finalPrice, cardDiscountPercent);
+  const finalPrice = isNewProduct
+    ? basePrice
+    : calculateFinalPrice(basePrice, discountPercent);
+
+  const priceByCard = isNewProduct
+    ? basePrice
+    : calculatePriceByCard(finalPrice, cardDiscountPercent);
 
   return (
     <div
@@ -64,11 +71,11 @@ function ProductCard({
       <div className="flex flex-col justify-between p-2 gap-y-2">
         <div className="flex flex-row justify-between items-end">
           <div className="flex flex-col gap-x-1">
-            <div className="flex flex-row gap-x-1 text-sm md:text-lg font-bold">
+            <div className="flex flex-row gap-x-1 text-sm md:text-lg font-bold text-[#414141]">
               <span>{formatPrice(priceByCard)}</span>
               <span>₽</span>
             </div>
-            {cardDiscountPercent > 0 && (
+            {discountPercent > 0 && (
               <p className="text-[#bfbfbf] text-[8px] md:text-xs">С картой</p>
             )}
           </div>
@@ -79,7 +86,9 @@ function ProductCard({
                 <span>{formatPrice(finalPrice)}</span>
                 <span>₽</span>
               </div>
-              <p className="text-[#bfbfbf] text-[8px] md:text-xs">Обычная</p>
+              <p className="text-[#bfbfbf] text-[8px] md:text-xs text-right">
+                Обычная
+              </p>
             </div>
           )}
         </div>
