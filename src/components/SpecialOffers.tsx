@@ -31,7 +31,7 @@ function SpecialOffers() {
                 alt="Оформите карту"
                 width={220}
                 height={110}
-                className="absolute -top-3 -right-18.5 xl:-right-4 xl:-top-8 xl:w-[330px] xl:h-auto"
+                className="absolute w-auto h-auto -top-3 -right-18.5 xl:-right-4 xl:-top-8 xl:w-[330px] xl:h-auto"
               />
             </button>
             <button

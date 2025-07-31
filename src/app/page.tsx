@@ -1,4 +1,7 @@
 import Action from "@/components/Action";
+import Articles from "@/components/Articles";
+import Footer from "@/components/Footer";
+import Maps from "@/components/Maps";
 import NewProducts from "@/components/NewProducts";
 import Purchases from "@/components/Purchases";
 import Slider from "@/components/slider/Slider";
@@ -16,6 +19,8 @@ export default function Home() {
         <NewProducts />
         <Purchases />
         <SpecialOffers />
+        <Maps />
+        <Articles />
       </div>
     </main>
   );
