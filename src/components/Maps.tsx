@@ -1,6 +1,6 @@
 "use client";
 
-import { Map, YMaps, Placemark } from "@pbe/react-yandex-maps";
+import { Map, YMaps, Placemark } from "@iminside/react-yandex-maps";
 import { useState } from "react";
 import { locations } from "@/data/locations";
 
