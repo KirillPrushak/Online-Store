@@ -1,10 +1,27 @@
 import Image from "next/image";
-import Link from "next/link";
-import iconRight from "../../public/icons-header/icon-arrow-right.svg";
-import articleDatabase from "../data/articlesDatabase.json";
+import { Article } from "@/types/articles";
+import ViewAllButton from "./ViewAllButton";
+import { log } from "node:console";
+// import articleDatabase from "../data/articlesDatabase.json";
 
-function Articles() {
-  const articles = articleDatabase;
+async function Articles() {
+  // const articles = articleDatabase;
+  let articles: Article[] = [];
+  let error = null;
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL!}/api/articles`
+    );
+    articles = await res.json();
+  } catch (err) {
+    error = "Ошибка получения статей";
+    console.log("Ошибка в компоненте Article:", err);
+  }
+
+  if (error) {
+    return <div className="text-red-500">Ошибка: {error}</div>;
+  }
 
   return (
     <section>
@@ -14,30 +31,13 @@ function Articles() {
       >
         <div className="flex flex-row justify-between mb-4 md:mb-8 xl:mb-10">
           <h2 className="text-2xl xl:text-4xl text-left font-bold">Статьи</h2>
-          <Link
-            href="#"
-            className="flex flex-row items-center gap-x-2 cursor-pointer"
-          >
-            <p
-              className="text-base text-center text-[#606060] 
-            hover:text-[#bfbfbf] duration-300"
-            >
-              К статьям
-            </p>
-            <Image
-              src={iconRight}
-              alt="К статьям"
-              width={24}
-              height={24}
-              sizes="24px"
-            />
-          </Link>
+          <ViewAllButton btnText="Все статьи" href="articles" />
         </div>
 
         {/* Список статей */}
         <ul className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-6">
           {articles.map((article) => (
-            <li key={article.id} className="h-75 md:h-105">
+            <li key={article._id} className="h-75 md:h-105">
               {
                 <article
                   className="flex flex-col rounded overflow-hidden bg-white h-full

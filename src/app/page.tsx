@@ -1,6 +1,5 @@
-import Action from "@/components/Action";
+import Actions from "@/components/Actions";
 import Articles from "@/components/Articles";
-import Footer from "@/components/Footer";
 import Maps from "@/components/Maps";
 import NewProducts from "@/components/NewProducts";
 import Purchases from "@/components/Purchases";
@@ -15,7 +14,7 @@ export default function Home() {
         className="px-[max(12px,calc((100%-1208px)/2))]
           flex flex-col gap-y-20 md:mb-25 xl:mb-30"
       >
-        <Action />
+        <Actions />
         <NewProducts />
         <Purchases />
         <SpecialOffers />

@@ -1,20 +1,24 @@
-import Image from "next/image";
-import iconRight from "../../public/icon-products/icon-arrow-right.svg";
 import ProductCard from "./ProductCard";
-import database from "@/data/database.json";
+import { ProductCardProps } from "@/types/produc";
+import ViewAllButton from "./ViewAllButton";
 
-function Purchases() {
-  const userPurchases = database.users[0].purchases
-    .map((purchase) => {
-      const product = database.products.find(
-        (product) => product.id === purchase.id
-      );
-      if (!product) return undefined;
-      const { discountPercent, ...rest } = product;
-      void discountPercent; // не нужный
-      return rest;
-    })
-    .filter((item) => item !== undefined);
+async function Purchases() {
+  let purchases: ProductCardProps[] = [];
+  let error = null;
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL!}/api/users/purchases`
+    );
+    purchases = await res.json();
+  } catch (err) {
+    error = "Ошибка получения купленных продуктов";
+    // console.error("Ошибка в компоненте Purchases:", err);
+  }
+
+  if (error) {
+    return <div className="text-red-500">Ошибка: {error}</div>;
+  }
 
   return (
     <section>
@@ -23,24 +27,13 @@ function Purchases() {
           <h2 className="text-2xl xl:text-4xl text-left font-bold text-[#414141]">
             Покупали раньше
           </h2>
-          <button className="flex flex-row items-center gap-x-2 cursor-pointe">
-            <p className="text-base text-center text-[#606060] hover:text-[#bfbfbf] duration-300">
-              Все покупки
-            </p>
-            <Image
-              src={iconRight}
-              alt="К новинкам"
-              width={24}
-              height={24}
-              sizes="24px"
-            />
-          </button>
+          <ViewAllButton btnText="Все покупки" href="purchases" />
         </div>
         <ul
           className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4
             gap-4 md:gap-6 xl:gap-10 justify-items-center"
         >
-          {userPurchases.slice(0, 4).map((item, index) => (
+          {purchases.slice(0, 4).map((item, index) => (
             <li
               key={item.id}
               className={`${index >= 4 ? "hidden" : ""}
